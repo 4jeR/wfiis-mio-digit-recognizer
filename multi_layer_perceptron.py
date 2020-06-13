@@ -27,7 +27,6 @@ model.add(tf.keras.layers.Flatten())
 
 ''' 128 - liczba neuronow w poszczegolnej warstwie sieci'''
 model.add(tf.keras.layers.Dense(256, activation=tf.nn.relu))
-# model.add(tf.keras.layers.Dropout)
 
 model.add(tf.keras.layers.Dense(256, activation=tf.nn.relu))
 ''' 10 - liczba klasyfikacji - w naszym przypadku cyfry [0-9] '''
@@ -51,11 +50,7 @@ pred = []
 for i in range(len(predicted)):
     pred.append(np.argmax(predicted[i]))
 
-
-
-
-
-''' Macierze pomylek '''
+''' Error matrices '''
 matrix = confusion_matrix(y_test_digit, pred)
 fig, ax = plot_confusion_matrix(conf_mat=matrix)
 
@@ -75,25 +70,15 @@ end = time.time()
 
 print(f"Multilayer perceptron time = {end - start}")
 
-
 pred = []
 for i in range(len(predicted)):
     pred.append(np.argmax(predicted[i]))
 
 
-
-
-
-
-
-
-
+''' Save output to submission file '''
 f = open("digit-recognizer/our_submission_mlp.csv", mode='w')
 f.write("ImageId,Label\n")
 for i in range(len(predicted)):
     f.write(f"{i+1},{pred[i]}\n")
 
 f.close()
-
-
-

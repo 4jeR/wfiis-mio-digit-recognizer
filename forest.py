@@ -7,7 +7,6 @@ from sklearn.metrics import plot_confusion_matrix, classification_report, accura
 import time
 
 # 5 20 50 100 200
-
 rfc = RandomForestClassifier(n_estimators=200)
 
 
@@ -27,13 +26,11 @@ rfc.fit(x_train, y_train_digit)
 predicted = rfc.predict(x_test)
 
 
-# print(classification_report(y_test_digit, predicted))
 print("Accuracy: ", accuracy_score(y_test_digit, predicted))
 
 
-''' Macierze pomylek '''
+''' Error matrices '''
 np.set_printoptions(precision=2)
-# Plot non-normalized confusion matrix
 titles_options = [("Confusion matrix, without normalization", None),
                   ("Normalized confusion matrix", 'true')]
 for title, normalize in titles_options:
@@ -42,8 +39,6 @@ for title, normalize in titles_options:
                                  normalize=normalize)
     disp.ax_.set_title(title)
 
-    # print(title)
-    # print(disp.confusion_matrix)
 
 plt.show()
 
@@ -66,21 +61,10 @@ end = time.time()
 print(f"Decision Tree Clasifier time = {end - start}")
 
 
-
-
-
-
-
-
-
-
-
+''' Save output to submission file '''
 f = open("digit-recognizer/our_submission_rfc.csv", mode='w')
 f.write("ImageId,Label\n")
 for i in range(len(predicted)):
     f.write(f"{i+1},{predicted[i]}\n")
 
 f.close()
-
-
-
